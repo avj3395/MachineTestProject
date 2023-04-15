@@ -3,12 +3,11 @@ import {COLORS} from '@app/constants/themes';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'gray',
-    // width: SIZES.width,
+    backgroundColor: COLORS.blue,
     alignItems: 'center',
     justifyContent: 'center',
     paddingVertical: 15,
-    borderRadius: 24,
+    borderRadius: 8,
   },
   textStyle: {
     color: COLORS.white,

@@ -5,6 +5,7 @@ import {
   ViewStyle,
   TextStyle,
   StyleSheet,
+  ActivityIndicator,
 } from 'react-native';
 import React, {memo} from 'react';
 import styles from './styles';
@@ -14,10 +15,11 @@ type Props = {
   buttonStyle?: ViewStyle;
   textStyle?: TextStyle;
   onPress: Function;
+  isLoading?: boolean;
 };
 
 const ButtonComponent = (props: Props) => {
-  const {buttonStyle, textStyle, label, onPress} = props;
+  const {buttonStyle, textStyle, label, onPress, isLoading = false} = props;
 
   const combineButtonStyles = StyleSheet.flatten([
     styles.container,
@@ -27,7 +29,11 @@ const ButtonComponent = (props: Props) => {
 
   return (
     <Pressable onPress={() => onPress()} style={combineButtonStyles}>
-      <Text style={combineTextStyles}>{label}</Text>
+      {isLoading ? (
+        <ActivityIndicator color="white" size={'small'} />
+      ) : (
+        <Text style={combineTextStyles}>{label}</Text>
+      )}
     </Pressable>
   );
 };

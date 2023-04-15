@@ -4,51 +4,123 @@ import {getAxiosInstance} from '../../apis/api';
 
 // Define a type for the slice state
 type AppState = {
-  value: number;
+  isLoading: boolean;
+  isLoadingHome: boolean;
+  locationDetails: any;
+  loginDetails: any;
+  token: string;
+  homeDetails: any;
 };
 
 const initialState: AppState = {
-  value: 0,
+  isLoading: false,
+  isLoadingHome: false,
+  locationDetails: null,
+  token: '',
+  loginDetails: null,
+  homeDetails: null,
 };
 
-// export const uploadImageApi = createAsyncThunk(
-//   'app/uploadImageApi',
-//   async (params: any, {rejectWithValue}) => {
-//     const api = await getAxiosImageInstance();
-//     try {
-//       const response = await api.post('member/update', params);
-//       return response?.data;
-//     } catch (error: any) {
-//       return rejectWithValue(error?.reponse?.data);
-//     }
-//   },
-// );
+export const getLocation = createAsyncThunk(
+  'app/getLocation',
+  async (params: any, {rejectWithValue}) => {
+    const api = await getAxiosInstance();
+    try {
+      const response = await api.post('warehouse/get-by-location', params);
+      return response?.data;
+    } catch (error: any) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
+
+export const loginApi = createAsyncThunk(
+  'app/loginApi',
+  async (params: any, {rejectWithValue}) => {
+    const api = await getAxiosInstance();
+    try {
+      const response = await api.post('register', params);
+      return response?.data;
+    } catch (error: any) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
+
+export const verifyOtpApi = createAsyncThunk(
+  'app/verifyOtpApi',
+  async (params: any, {rejectWithValue}) => {
+    const api = await getAxiosInstance();
+    try {
+      const response = await api.post('verify-otp', params);
+      return response?.data;
+    } catch (error: any) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
+
+export const getHomeDetails = createAsyncThunk(
+  'app/getHomeDetails',
+  async (params: any, {rejectWithValue}) => {
+    const api = await getAxiosInstance();
+    try {
+      const response = await api.post('home', params);
+      return response?.data;
+    } catch (error: any) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
 
 export const appSlice = createSlice({
   name: 'app',
-  // `createSlice` will infer the state type from the `initialState` argument
   initialState,
-  reducers: {
-    increment: state => {
-      state.value += 1;
-    },
-    decrement: state => {
-      state.value -= 1;
-    },
-    reset: state => {
-      state.value = 0;
-    },
-    // Use the PayloadAction type to declare the contents of `action.payload`
-    incrementByAmount: (state, action: PayloadAction<number>) => {
-      state.value += action.payload;
-    },
+  reducers: {},
+  extraReducers: builder => {
+    builder.addCase(getLocation.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getLocation.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.locationDetails = action?.payload?.data;
+    });
+    builder.addCase(getLocation.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(loginApi.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(loginApi.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.loginDetails = action?.payload?.data;
+    });
+    builder.addCase(loginApi.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(verifyOtpApi.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(verifyOtpApi.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.token = action?.payload?.data?.token;
+    });
+    builder.addCase(verifyOtpApi.rejected, (state, action) => {
+      state.isLoading = false;
+    });
+    builder.addCase(getHomeDetails.pending, (state, action) => {
+      state.isLoadingHome = true;
+    });
+    builder.addCase(getHomeDetails.fulfilled, (state, action) => {
+      state.isLoadingHome = false;
+      state.homeDetails = action?.payload?.data;
+    });
+    builder.addCase(getHomeDetails.rejected, (state, action) => {
+      state.isLoadingHome = false;
+    });
   },
 });
 
-export const {increment, decrement, incrementByAmount, reset} =
-  appSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-// export const selectCount = (state: RootState) => state.counter.value
+export const {} = appSlice.actions;
 
 export default appSlice.reducer;

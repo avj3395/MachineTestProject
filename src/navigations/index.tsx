@@ -16,7 +16,7 @@ const Navigation = () => {
   return (
     <React.Fragment>
       <Stack.Navigator
-        initialRouteName="WelcomeScreen"
+        initialRouteName="HomeScreen"
         screenOptions={{headerShown: false, gestureEnabled: true}}>
         <Stack.Screen name={'WelcomeScreen'} component={WelcomeScreen} />
         <Stack.Screen

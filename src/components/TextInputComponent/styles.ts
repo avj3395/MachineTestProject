@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 1,
     borderColor: COLORS.grey,
-    // marginTop: 14,
     borderRadius: 3,
   },
   placeHolderStyle: {

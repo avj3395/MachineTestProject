@@ -1,17 +1,19 @@
 import axios from 'axios';
+import store from '../store';
+export const BASE_URL = 'https://test.freshandfetch.com';
 
 export const getAxiosInstance = async () => {
-  // const state = store.getState();
-  let token = '';
-  const BASE_URL = 'https://test.freshandfetch.com/api/v1/';
+  const state = store.getState();
+  let token = state.app.token;
 
   try {
   } catch (error) {
   } finally {
     const instance = axios.create({
-      baseURL: BASE_URL,
+      baseURL: BASE_URL + '/api/v1/',
       headers: {
         Accept: 'application/json',
+        'Content-Type': 'multipart/form-data',
       },
     });
 
@@ -20,7 +22,7 @@ export const getAxiosInstance = async () => {
         if (token) {
           config.headers['Authorization'] = 'Bearer ' + token;
         }
-        //   console.log(config, 'configg========');
+        console.log(config, 'configg========');
         return config;
       },
       function (error) {
@@ -34,11 +36,9 @@ export const getAxiosInstance = async () => {
           resolve(response);
         }),
       async error => {
-        if (!error.response) {
-          return new Promise((resolve, reject) => {
-            reject(error);
-          });
-        } else {
+        if (error.response) {
+          console.log('ERROR=======', error.response);
+
           return new Promise((resolve, reject) => {
             reject(error);
           });
