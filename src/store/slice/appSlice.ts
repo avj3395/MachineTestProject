@@ -2,14 +2,15 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import {getAxiosInstance} from '../../apis/api';
 
-// Define a type for the slice state
 type AppState = {
   isLoading: boolean;
   isLoadingHome: boolean;
   locationDetails: any;
   loginDetails: any;
   token: string;
+  isToken: boolean;
   homeDetails: any;
+  productDetails: any;
 };
 
 const initialState: AppState = {
@@ -17,8 +18,10 @@ const initialState: AppState = {
   isLoadingHome: false,
   locationDetails: null,
   token: '',
+  isToken: false,
   loginDetails: null,
   homeDetails: null,
+  productDetails: null,
 };
 
 export const getLocation = createAsyncThunk(
@@ -73,6 +76,19 @@ export const getHomeDetails = createAsyncThunk(
   },
 );
 
+export const getProductDetails = createAsyncThunk(
+  'app/getProductDetails',
+  async (params: any, {rejectWithValue}) => {
+    const api = await getAxiosInstance();
+    try {
+      const response = await api.post('product/detail', params);
+      return response?.data;
+    } catch (error: any) {
+      return rejectWithValue(error?.response?.data);
+    }
+  },
+);
+
 export const appSlice = createSlice({
   name: 'app',
   initialState,
@@ -104,6 +120,7 @@ export const appSlice = createSlice({
     builder.addCase(verifyOtpApi.fulfilled, (state, action) => {
       state.isLoading = false;
       state.token = action?.payload?.data?.token;
+      state.isToken = true;
     });
     builder.addCase(verifyOtpApi.rejected, (state, action) => {
       state.isLoading = false;
@@ -117,6 +134,16 @@ export const appSlice = createSlice({
     });
     builder.addCase(getHomeDetails.rejected, (state, action) => {
       state.isLoadingHome = false;
+    });
+    builder.addCase(getProductDetails.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getProductDetails.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.productDetails = action?.payload?.data;
+    });
+    builder.addCase(getProductDetails.rejected, (state, action) => {
+      state.isLoading = false;
     });
   },
 });

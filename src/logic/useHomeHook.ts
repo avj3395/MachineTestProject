@@ -20,7 +20,12 @@ const useHomeHook = () => {
     getHomeData();
   }, []);
 
-  return {isLoadingHome, homeDetails};
+  const onSelectTending = (data: any) => {
+    console.log('onSelectTending=======', data);
+    navigate('ProductDetailScreen', {product: data});
+  };
+
+  return {isLoadingHome, homeDetails, onSelectTending};
 };
 
 export default useHomeHook;

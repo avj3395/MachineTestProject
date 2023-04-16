@@ -1,26 +1,27 @@
-import {StyleSheet, Text, View, Image} from 'react-native';
+import {StyleSheet, Text, View, Image, Pressable} from 'react-native';
 import React from 'react';
 import {BASE_URL} from '../../apis/api';
 import {SIZES, responseHeight, responseWidth} from '@app/constants/themes';
 
 type TrendingItemsType = {
-  imageUrl: string;
+  item: any;
   leftItem: boolean;
+  onSelectTending: Function;
 };
 
 const TrendingItems = (props: TrendingItemsType) => {
-  const {imageUrl, leftItem} = props;
+  const {item, leftItem, onSelectTending} = props;
 
   return (
-    <View>
+    <Pressable onPress={() => onSelectTending(item)}>
       <Image
         source={{
-          uri: BASE_URL + imageUrl,
+          uri: BASE_URL + item?.image,
         }}
         style={[styles.imageStyle, {marginRight: leftItem ? 8 : 0}]}
         resizeMode={'stretch'}
       />
-    </View>
+    </Pressable>
   );
 };
 

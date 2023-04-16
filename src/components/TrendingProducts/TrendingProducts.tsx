@@ -5,10 +5,11 @@ import {COLORS} from '@app/constants/themes';
 
 type TrendingProductsType = {
   data: Array<any>;
+  onSelectTending: Function;
 };
 
 const TrendingProducts = (props: TrendingProductsType) => {
-  const {data} = props;
+  const {data, onSelectTending} = props;
   return (
     <View style={styles.container}>
       <Text style={styles.headStyle}>Trending Products</Text>
@@ -19,7 +20,11 @@ const TrendingProducts = (props: TrendingProductsType) => {
         showsVerticalScrollIndicator={false}
         numColumns={2}
         renderItem={({item, index}) => (
-          <TrendingItems imageUrl={item.image} leftItem={index % 2 == 0} />
+          <TrendingItems
+            onSelectTending={(data: any) => onSelectTending(data)}
+            item={item}
+            leftItem={index % 2 == 0}
+          />
         )}
       />
     </View>

@@ -8,7 +8,7 @@ import BannerSlider from '@app/components/BannerSlider/BannerSlider';
 import LogoComponent from '@app/components/LogoComponent/LogoComponent';
 import TrendingProducts from '@app/components/TrendingProducts/TrendingProducts';
 const index = () => {
-  const {isLoadingHome, homeDetails} = useHomeHook();
+  const {isLoadingHome, homeDetails, onSelectTending} = useHomeHook();
 
   return (
     <SafeAreaWrapper containerStyle={{paddingHorizontal: 0}}>
@@ -18,7 +18,10 @@ const index = () => {
         <View style={styles.container}>
           <LogoComponent />
           <BannerSlider data={homeDetails?.banners} />
-          <TrendingProducts data={homeDetails?.trending_products} />
+          <TrendingProducts
+            data={homeDetails?.trending_products}
+            onSelectTending={(data: any) => onSelectTending(data)}
+          />
         </View>
       )}
     </SafeAreaWrapper>

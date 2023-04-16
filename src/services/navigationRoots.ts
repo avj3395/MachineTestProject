@@ -22,3 +22,9 @@ export function resetNavigation(name: any, params: any) {
     );
   }
 }
+
+export function navigateBack() {
+  if (navigationRef.isReady()) {
+    navigationRef.goBack();
+  }
+}

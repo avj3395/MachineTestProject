@@ -9,14 +9,16 @@ import HomeScreen from '@app/screens/HomeScreen';
 import OtpScreen from '@app/screens/OtpScreen';
 import PinCodeScreen from '@app/screens/PincodeScreen';
 import ProductDetailScreen from '@app/screens/ProductDetailScreen';
+import {useAppSelector} from '@app/store/services/appStoreHook';
 
 const Navigation = () => {
+  const {token} = useAppSelector(state => state.app);
   const Stack = createNativeStackNavigator<RootStackType>();
 
   return (
     <React.Fragment>
       <Stack.Navigator
-        initialRouteName="HomeScreen"
+        initialRouteName={'WelcomeScreen'}
         screenOptions={{headerShown: false, gestureEnabled: true}}>
         <Stack.Screen name={'WelcomeScreen'} component={WelcomeScreen} />
         <Stack.Screen

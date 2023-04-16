@@ -31,7 +31,7 @@ const useOtpHook = () => {
       resetNavigation('HomeScreen', null);
     } else {
       const error: any = resultAction?.payload;
-      formik.setFieldError('otp', error?.errors?.otp[0]);
+      formik.setFieldError('otp', error?.message);
     }
   };
 
