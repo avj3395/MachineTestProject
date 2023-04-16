@@ -22,7 +22,7 @@ export const getAxiosInstance = async () => {
         if (token) {
           config.headers['Authorization'] = 'Bearer ' + token;
         }
-        console.log(config, 'configg========');
+
         return config;
       },
       function (error) {
@@ -37,8 +37,6 @@ export const getAxiosInstance = async () => {
         }),
       async error => {
         if (error.response) {
-          console.log('ERROR=======', error.response);
-
           return new Promise((resolve, reject) => {
             reject(error);
           });

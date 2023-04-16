@@ -12,9 +12,6 @@ const useProductDetails = () => {
   );
   const {product} = route.params;
 
-  console.log('PRODUCT =======', product);
-  console.log('productDetails =======', productDetails);
-
   const getProductData = async () => {
     const formData = new FormData();
     formData.append('warehouse_id', locationDetails?.location?.warehouse_id);

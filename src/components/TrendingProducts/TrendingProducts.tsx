@@ -19,6 +19,8 @@ const TrendingProducts = (props: TrendingProductsType) => {
         contentContainerStyle={{marginTop: 10, paddingBottom: 20}}
         showsVerticalScrollIndicator={false}
         numColumns={2}
+        horizontal={false}
+        columnWrapperStyle={{justifyContent: 'space-between'}}
         renderItem={({item, index}) => (
           <TrendingItems
             onSelectTending={(data: any) => onSelectTending(data)}

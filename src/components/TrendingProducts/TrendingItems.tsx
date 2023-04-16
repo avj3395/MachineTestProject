@@ -13,7 +13,7 @@ const TrendingItems = (props: TrendingItemsType) => {
   const {item, leftItem, onSelectTending} = props;
 
   return (
-    <Pressable onPress={() => onSelectTending(item)}>
+    <Pressable style={styles.container} onPress={() => onSelectTending(item)}>
       <Image
         source={{
           uri: BASE_URL + item?.image,
@@ -28,8 +28,10 @@ const TrendingItems = (props: TrendingItemsType) => {
 export default TrendingItems;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1 / 2,
+  },
   imageStyle: {
-    width: responseWidth(SIZES.width / 2 - 23),
     height: responseHeight(200),
     borderRadius: 6,
     marginBottom: 6,

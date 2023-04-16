@@ -21,7 +21,6 @@ const useHomeHook = () => {
   }, []);
 
   const onSelectTending = (data: any) => {
-    console.log('onSelectTending=======', data);
     navigate('ProductDetailScreen', {product: data});
   };
 
